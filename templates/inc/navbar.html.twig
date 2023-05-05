@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+        {#        <a class="navbar-brand" href="{{ path('reservation_home') }}">Memento</a> #}
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+                aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">
+                        <a class="nav-link active" href="{{ path('reservation_home') }}">Accueil/Réservation</a>
+                    </button>
+                </li>
+
+                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <button type="button" class="btn btn-primary">
+                            <a class="dropdown-item" href="{{ path('concept_general') }}">Concept</a>
+                        </button>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                                <a class="dropdown-item" href="{{ path('concept_midi') }}">Concept du Midi</a>
+                                <a class="dropdown-item" href="{{ path('concept_soir') }}">Concept du Soir</a>
+                            </div>
+                        </div>
+                    </div>
+
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">
+                        <a class="nav-link active" href="{{ path('cuisine') }}">Cuisine</a>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">
+                        <a class="nav-link active" href="{{ path('presse') }}">Presse</a>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button type="button" class="btn btn-primary">
+                        <a class="nav-link active"
+                           href="{{ path('media_localisation') }}">Contact/Localisation/Média</a>
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <div class="navbar-nav ml-auto collapse navbar-collapse">
+            <a>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
+                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% elseif app.user %}
+                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% else %}
+                    <li><a class="nav-link active" href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li><a class="nav-link active" href="{{ path('app_register') }}">S'inscrire</a></li>
+                {% endif %}
+            </a>
+            <a href="#" class="nav-item nav-link"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#" class="nav-item nav-link"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="nav-item nav-link"><i class="fa-regular fa-envelope"></i></a>
+            <a href="#" class="nav-item nav-link"><i class="fa-solid fa-phone"></i></a>
+        </div>
+
+        {#                        <li class="nav-item dropdown"> #}
+        {#                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="{{ path('concept_general') }}" #}
+        {#                               role="button" aria-haspopup="true" aria-expanded="false">Concepts</a> #}
+        {#                            <div class="dropdown-menu"> #}
+        {#                                <a class="dropdown-item" href="{{ path('concept_general') }}">Concept</a> #}
+        {#                                <a class="dropdown-item" href="{{ path('concept_midi') }}">Concept du Midi</a> #}
+        {#                                <a class="dropdown-item" href="{{ path('concept_soir') }}">Concept du Soir</a> #}
+        {#                            </div> #}
+        {#                        </li> #}
+
+    </div>
+</nav>

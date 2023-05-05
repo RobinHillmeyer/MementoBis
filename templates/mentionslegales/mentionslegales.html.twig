@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block body %}
+
+    <div class="container mx-auto">
+        <div class="row mb-lg-0">
+
+            <h1>Mentions Légales</h1>
+
+            <div>
+                {% for texte in textes %}
+                {% if texte.etat == true %}
+                <div style="padding-top: 1rem">
+                    <span>{{ texte.description | raw }}</span>
+                </div>
+            </div>
+
+            <div class="text-center">
+                {% if images is not empty %}
+                    <div id="carouselExampleIndicators" class="carousel slide p-3 " data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for images in texte.images %}
+                                <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                    <img src="{{ asset('asset/images/' ~ images.imageName) }}"
+                                         class="w-50 rounded-5" alt="...">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

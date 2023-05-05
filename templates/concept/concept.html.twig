@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Concept{% endblock %}
+
+{% block body %}
+
+    <div class="container mx-auto">
+
+        <h1>Concept</h1>
+
+        <div class="">
+            {% for texte in textes %}
+            {% if texte.etat == true %}
+            <div style="padding-top: 1rem">
+                <span>{{ texte.description | raw }}</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center pt-5">
+            {% if images is not empty %}
+                <div id="carouselExampleIndicators" class="carousel slide p-3 " data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for images in texte.images %}
+                            <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                <img src="{{ asset('asset/images/' ~ images.imageName) }}"
+                                     class="d-block w-100 h-100 rounded-5" alt="...">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            <div class="liens">
+                <h2><a href="{{ path('concept_midi') }}" class="btn btn-primary">Concept du Midi</a></h2>
+                <h2><a href="{{ path('concept_soir') }}" class="btn btn-primary">Concept du Soir</a></h2>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

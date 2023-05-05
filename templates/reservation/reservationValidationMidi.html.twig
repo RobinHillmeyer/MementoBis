@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation Validation{% endblock %}
+
+{% block body %}
+
+    <div class="container mx-auto">
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                {{ form_start(resaUserForm) }}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(resaUserForm.Prenom) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_row(resaUserForm.Nom) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form_row(resaUserForm.email) }}
+                    </div>
+
+                    <div class="col-md-6">
+                        {{ form_row(resaUserForm.telephone) }}
+                    </div>
+                </div>
+
+                {{ form_end(resaUserForm) }}
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

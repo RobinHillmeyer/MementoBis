@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Réservation{% endblock %}
+
+{% block body %}
+
+    <div class="container mx-auto">
+
+        <h1>Réservation</h1>
+
+        <div class="row">
+            <div class="liens">
+                <h2><a href="{{ path('reservation_midi') }}" class="btn btn-primary">Réservation du Midi</a></h2>
+                <h2><a href="{{ path('reservation_soir') }}" class="btn btn-primary">Réservation du Soir</a></h2>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="">
+            {% for texte in textes %}
+            {% if texte.etat == true %}
+            <div style="padding-top: 1rem">
+                <span>{{ texte.description | raw }}</span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="text-center pt-5">
+            {% if images is not empty %}
+                <div id="carouselExampleIndicators" class="carousel slide p-3 " data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for images in texte.images %}
+                            <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                <img src="{{ asset('asset/images/' ~ images.imageName) }}"
+                                     class="d-block w-100 h-100 rounded-5" alt="Image Réservation">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
+
+
+    </div>
+
+{% endblock %}
+
+{#                            <button class="carousel-control-prev" type="button" #}
+{#                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="prev"> #}
+{#                                <span class="carousel-control-prev-icon" aria-hidden="true"></span> #}
+{#                                <span class="visually-hidden">Previous</span> #}
+{#                            </button> #}
+{#                            <button class="carousel-control-next" type="button" #}
+{#                                    data-bs-target="#carouselExampleIndicators" data-bs-slide="next"> #}
+{#                                <span class="carousel-control-next-icon" aria-hidden="true"></span> #}
+{#                                <span class="visually-hidden">Next</span> #}
+{#                            </button> #}
+
