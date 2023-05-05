@@ -77,36 +77,6 @@ class Texte
         return $this;
     }
 
-//    /**
-//     * @return Collection<int, ImagesTexte>
-//     */
-//    public function getImagesTexte(): Collection
-//    {
-//        return $this->imagesTexte;
-//    }
-//
-//    public function addImagesTexte(ImagesTexte $imagesTexte): self
-//    {
-//        if (!$this->imagesTexte->contains($imagesTexte)) {
-//            $this->imagesTexte->add($imagesTexte);
-//            $imagesTexte->setTexte($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeImagesTexte(ImagesTexte $imagesTexte): self
-//    {
-//        if ($this->imagesTexte->removeElement($imagesTexte)) {
-//            // set the owning side to null (unless already changed)
-//            if ($imagesTexte->getTexte() === $this) {
-//                $imagesTexte->setTexte(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
-
     public function isEtat(): ?bool
     {
         return $this->etat;

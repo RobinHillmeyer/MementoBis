@@ -6,8 +6,7 @@ use App\Repository\CategoriesRepository;
 //use App\Repository\ImagesPlatsSaleRepository;
 //use App\Repository\ImagesPlatsSucreRepository;
 use App\Repository\ImageRepository;
-//use App\Repository\PlatsSaleRepository;
-//use App\Repository\PlatsSucreRepository;
+use App\Repository\PlatRepository;
 use App\Repository\TexteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,37 +34,23 @@ class ConceptController extends AbstractController
 
     #[Route('/midi', name: 'midi')]
     public function conceptDuMidi(TexteRepository $texteRepository,
-//                                  PlatsSaleRepository $platsSaleRepository,
-//                                  PlatsSucreRepository $platsSucreRepository,
+                                  PlatRepository $platRepository,
                                   CategoriesRepository $categoriesRepository,
                                   ImageRepository $imageRepository,
-//                                  ImagesPlatsSaleRepository $imagesPlatsSaleRepository,
-//                                  ImagesPlatsSucreRepository $imagesPlatsSucreRepository
     ): Response
     {
         $categories = $categoriesRepository ->findOneBy(array('nom' => 'Concept du Midi'));
-
         $textes = $texteRepository ->findBy(array('categories' => $categories));
+        $plats = $platRepository ->findAll();
         $images = $imageRepository ->findBy(array('texte' => $textes));
-//
-//        $platsSales = $platsSaleRepository ->findLesPlatsSales();
-//        $imagesPlatsSales = $imagesPlatsSaleRepository ->findBy(array('PlatsSale' => $platsSales));
-//
-//        $platsSucres = $platsSucreRepository ->findLesPlatsSucres();
-//        $imagesPlatsSucres = $imagesPlatsSucreRepository ->findBy(array('PlatsSucre' => $platsSucres));
-
-
+        $imagesplats = $imageRepository ->findBy(array('plat' => $plats));
 
         return $this->render('concept/conceptMidi.html.twig', [
             'categories' => $categories,
-
+            'plats' => $plats,
             'textes' => $textes,
             'images' => $images,
-//
-//            'platsSales' => $platsSales,
-//            'platsSucres' => $platsSucres,
-//            'imagesPlatsSales' => $imagesPlatsSales,
-//            'imagesPlatsSucres' => $imagesPlatsSucres,
+            'imagesplats' => $imagesplats,
         ]);
     }
 

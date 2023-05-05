@@ -8,6 +8,15 @@
 
         <h1>Concept du Soir</h1>
 
+        <div class="row" id="sticky">
+            <div class="liens">
+                <h2><a class="btn btn-primary" href="{{ path('reservation_soir') }}">Réserver</a></h2>
+                <h2><a class="btn btn-primary" href="{{ path('concept_general') }}">Retour aux Concepts</a></h2>
+            </div>
+        </div>
+
+        <hr>
+
         <div class="">
             {% for texte in textes %}
             {% if texte.etat == true %}
@@ -15,6 +24,7 @@
                 <span>{{ texte.description | raw }}</span>
             </div>
         </div>
+
         <hr>
 
         <div class="text-center pt-5">
@@ -33,14 +43,5 @@
             {% endif %}
             {% endfor %}
         </div>
-
-
-        <div class="row">
-            <div class="liens">
-                <h2><a class="btn btn-primary" href="{{ path('reservation_soir') }}">Réserver</a></h2>
-                <h2><a class="btn btn-primary" href="{{ path('concept_general') }}">Retour aux Concepts</a></h2>
-            </div>
-        </div>
-
     </div>
 {% endblock %}

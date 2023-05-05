@@ -21,8 +21,8 @@ class Categories
     #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Texte::class)]
     private Collection $Textes;
 
-    #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Plat::class)]
-    private Collection $plats;
+//    #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Plat::class)]
+//    private Collection $plats;
 
 //    #[ORM\OneToMany(mappedBy: 'CategoriesId', targetEntity: PlatsSale::class)]
 //    private Collection $platsSales;
@@ -32,11 +32,8 @@ class Categories
 
     public function __construct()
     {
-//        $this->textes = new ArrayCollection();
         $this->Textes = new ArrayCollection();
-//        $this->platsSales = new ArrayCollection();
-//        $this->platsSucres = new ArrayCollection();
-$this->plats = new ArrayCollection();
+//        $this->plats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -151,33 +148,33 @@ $this->plats = new ArrayCollection();
 //        return $this;
 //    }
 
-/**
- * @return Collection<int, Plat>
- */
-public function getPlats(): Collection
-{
-    return $this->plats;
-}
-
-public function addPlat(Plat $plat): self
-{
-    if (!$this->plats->contains($plat)) {
-        $this->plats->add($plat);
-        $plat->setCategories($this);
-    }
-
-    return $this;
-}
-
-public function removePlat(Plat $plat): self
-{
-    if ($this->plats->removeElement($plat)) {
-        // set the owning side to null (unless already changed)
-        if ($plat->getCategories() === $this) {
-            $plat->setCategories(null);
-        }
-    }
-
-    return $this;
-}
+///**
+// * @return Collection<int, Plat>
+// */
+//public function getPlats(): Collection
+//{
+//    return $this->plats;
+//}
+//
+//public function addPlat(Plat $plat): self
+//{
+//    if (!$this->plats->contains($plat)) {
+//        $this->plats->add($plat);
+//        $plat->setCategories($this);
+//    }
+//
+//    return $this;
+//}
+//
+//public function removePlat(Plat $plat): self
+//{
+//    if ($this->plats->removeElement($plat)) {
+//        // set the owning side to null (unless already changed)
+//        if ($plat->getCategories() === $this) {
+//            $plat->setCategories(null);
+//        }
+//    }
+//
+//    return $this;
+//}
 }

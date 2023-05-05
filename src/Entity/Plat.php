@@ -17,7 +17,7 @@ class Plat
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?bool $saveur = null;
+    private ?int $saveur = null;
 
     #[ORM\Column(length: 50)]
     private ?string $titre = null;
@@ -37,9 +37,6 @@ class Plat
     #[ORM\OneToMany(mappedBy: 'plat', targetEntity: Image::class, cascade: ['persist'])]
     private Collection $images;
 
-    #[ORM\ManyToOne(inversedBy: 'plats')]
-    private ?Categories $categories = null;
-
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -50,12 +47,12 @@ class Plat
         return $this->id;
     }
 
-    public function isSaveur(): ?bool
+    public function getSaveur(): ?int
     {
         return $this->saveur;
     }
 
-    public function setSaveur(bool $saveur): self
+    public function setSaveur(int $saveur): self
     {
         $this->saveur = $saveur;
 
@@ -148,18 +145,6 @@ class Plat
                 $image->setPlat(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCategories(): ?Categories
-    {
-        return $this->categories;
-    }
-
-    public function setCategories(?Categories $categories): self
-    {
-        $this->categories = $categories;
 
         return $this;
     }

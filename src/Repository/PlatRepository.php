@@ -39,13 +39,13 @@ class PlatRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLesPlats()
-    {
-        $query = $this->getEntityManager()->createQuery(
-            "SELECT ps FROM App:Plats ps WHERE ps.etat=1"
-        );
-        return $query->getResult();
-    }
+//    public function findLesPlats()
+//    {
+//        $query = $this->getEntityManager()->createQuery(
+//            "SELECT ps FROM App:Plats ps WHERE ps.etat=1"
+//        );
+//        return $query->getResult();
+//    }
 
 //    /**
 //     * @return Plat[] Returns an array of Plat objects

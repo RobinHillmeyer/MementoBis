@@ -65,7 +65,7 @@ footer {
 }
 
 .card {
-    margin:50px auto 0px auto;
+    margin:50px auto 0 auto;
     width: 330px;
     height: auto;
     background-color: #a7a3d2;
@@ -229,10 +229,20 @@ footer {
     letter-spacing: 1px !important
 }
 
+.logo-link {
+    padding-top: 50px;
+    max-width: 60%
+}
+
+#sticky {
+    position: sticky;
+    top: 70px;
+    z-index: 999;
+}
+
 @media screen and (max-width: 480px) {
     .liens {
         flex-direction: column;
-
     }
     h2 {
         margin-bottom: 30px;
