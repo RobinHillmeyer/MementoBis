@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\CategoriesRepository;
-//use App\Repository\ImagesPlatsSaleRepository;
-//use App\Repository\ImagesPlatsSucreRepository;
 use App\Repository\ImageRepository;
 use App\Repository\PlatRepository;
 use App\Repository\TexteRepository;

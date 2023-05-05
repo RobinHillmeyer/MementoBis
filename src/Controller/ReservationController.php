@@ -6,13 +6,8 @@ use App\Entity\User;
 
 //use App\Form\ResaMidiType;
 use App\Repository\CategoriesRepository;
-
-//use App\Repository\ImagesPlatsSaleRepository;
-//use App\Repository\ImagesPlatsSucreRepository;
 use App\Repository\ImageRepository;
-
-//use App\Repository\PlatsSaleRepository;
-//use App\Repository\PlatsSucreRepository;
+use App\Repository\PlatRepository;
 use App\Repository\TexteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,40 +36,22 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/midi', name: 'midi')]
-    public function midi(
-//        PlatsSaleRepository        $platsSaleRepository,
-//                         PlatsSucreRepository       $platsSucreRepository,
-//                         ImagesPlatsSaleRepository  $imagesPlatsSaleRepository,
-//                         ImagesPlatsSucreRepository $imagesPlatsSucreRepository
+    public function midi(PlatRepository       $platRepository,
+                         ImageRepository      $imageRepository
     ): Response
     {
-//        $platsSales = $platsSaleRepository->findLesPlatsSales();
-//        $imagesPlatsSales = $imagesPlatsSaleRepository->findBy(array('PlatsSale' => $platsSales));
-//        $platsSucres = $platsSucreRepository->findLesPlatsSucres();
-//        $imagesPlatsSucres = $imagesPlatsSucreRepository->findBy(array('PlatsSucre' => $platsSucres));
-
-        $quantite = 0;
-        $total = 0;
-        $totalGeneral = 0;
-        $duree = 0;
-        $totalDuree = 0;
-        $panierSession = 0;
+        $plats = $platRepository ->findAll();
+        $imagesplats = $imageRepository ->findBy(array('plat' => $plats));
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
         return $this->render('reservation/reservationMidi.html.twig', [
-//            'platsSales' => $platsSales,
-//            'platsSucres' => $platsSucres,
-//            'imagesPlatsSales' => $imagesPlatsSales,
-//            'imagesPlatsSucres' => $imagesPlatsSucres,
-            'quantite' => $quantite,
-            'total' => $total,
-            'totalGeneral' => $totalGeneral,
-            'paniersession' => $panierSession,
-            'duree' => $duree,
-            'totalDuree' => $totalDuree,
+
+            'plats' => $plats,
+            'imagesplats' => $imagesplats,
+
         ]);
     }
 

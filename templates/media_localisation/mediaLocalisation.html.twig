@@ -5,14 +5,14 @@
 {% block body %}
 
     <div class="container mx-auto">
-        <div class="row mb-lg-0">
+        <div class="row ">
 
             <h1>Média | Localisation | Contact</h1>
 
             <div class="">
                 {% for texte in textes %}
                 {% if texte.etat == true %}
-                <div style="padding-top: 1rem">
+                <div style="padding: 1rem">
                     <span>{{ texte.description | raw }}</span>
                 </div>
             </div>

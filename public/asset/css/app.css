@@ -230,7 +230,8 @@ footer {
 }
 
 .logo-link {
-    padding-top: 50px;
+    text-align: center;
+    padding-top: 5rem;
     max-width: 60%
 }
 

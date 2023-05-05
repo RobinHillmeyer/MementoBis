@@ -4,496 +4,222 @@
 
 {% block body %}
 
-    <div class="container mx-auto">
-        <div class="row text-center">
-
-            <script>
-
-                document.addEventListener('DOMContentLoaded', function () {
-                    var calendarElt = document.getElementById('calendrierJour');
-                    var calendarJour = new FullCalendar.Calendar(calendarElt, {
-                        initialView: 'dayGridMonth',
-                        locale: 'fr',
-                        timeZone: 'Europe/Paris',
-                        contentHeight: "auto",
-                        firstDay: 1,
-                        businessHours: {
-                            daysOfWeek: [2, 3, 4, 5, 6],
-                        },
+    <div>{{ "now" | date() }}</div>
 
 
-                        dateClick: function (date) {
-                            // Selection Jour Couleur
-                            $('*').removeClass('fc-Thisdaygrid-day');
-                            $('[data-date=' + date.dateStr + ']').addClass('fc-Thisdaygrid-day');
+    {#    <div class="container mx-auto"> #}
+    {#        <div class="row text-center"> #}
+    {#            <div id="calendrierJour"></div> #}
+    {#        </div> #}
 
-                            monJour = date.dateStr;
-                            $("#laDateDuJour").text(monJour);
-                            $('#laReservation').show();
-                            calendarHeure.gotoDate(monJour);
+    <hr>
 
-                        }
-                    });
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Plats Salé</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plats in plats %}
+                {% if plats.saveur == 0 %}
+                    {% if plats.etat == true %}
+                        <tr>
+                            <td class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                   data-bs-target="#platsSaleModal-{{ plats.id }}">{{ plats.titre }}</a>
+                            </td>
+                            <td class="col-md-3">
+                                {{ plats.prix/100 | number_format() }} €
+                            </td>
+                            <td class="col-md-2">
+                        <span id="btSaleMoins-{{ plats.id }}">
+                            <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
+                        </span>
 
-                    var calendarElt1 = document.getElementById('calendrierHeure');
-                    var calendarHeure = new FullCalendar.Calendar(calendarElt1, {
-                        initialView: 'timeGrid',
-                        headerToolbar: {
-                            start: '',
-                            center: 'title',
-                            end: ''
-                        },
-                        allDaySlot: false,
-                        slotMinTime: '12:10:00',
-                        slotMaxTime: '13:40:00',
-                        slotDuration: '00:10:00',
-                        slotLabelInterval: '00:10:00',
-                        locale: 'fr',
-                        timeZone: 'Europe/Paris',
-                        contentHeight: 'auto',
-                        nowIndicator: true,
-                        // selectable: true,
-                        unselectAuto: false,
+                                <span id="qteSale-{{ plats.id }}">
+{#                            {{ quantite }} #}
+                        </span>
 
-                    });
-                    calendarJour.render();
-                    calendarHeure.render();
-                });
+                                <span id="btSalePlus-{{ plats.id }}">
+                            <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
+                        </span>
 
-            </script>
+                            </td>
+                            <td class="col-md-3">
+                        <span class="totalLigne" id="totalSale-{{ plats.id }}">
+{#                            {{ total }} #}
+                        </span>
+                                €
+                            </td>
 
-            <div id="calendrierJour"></div>
+                        </tr>
 
-        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="platsSaleModal-{{ plats.id }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"
+                                            id="exampleModalLabel">{{ plats.titre | raw }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ plats.description | raw }}
+                                        {% if imagesplats is not empty %}
+                                            <div class="mt-3">
+                                                <div id="carouselExampleIndicators" class="carousel slide p-3 "
+                                                     data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+
+                                                        {% for imagesplats in plats.images %}
+
+                                                            <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                                                <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
+                                                                     class="d-block w-100 h-100 rounded-2"
+                                                                     alt="images plats">
+                                                            </div>
+
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Plats Sucré</th>
+                <th>Prix</th>
+                <th>Quantité</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for plats in plats %}
+                {% if plats.saveur == 1 %}
+                    {% if plats.etat == true %}
+                        <tr>
+                            <td class="col-md-4">
+                                <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                   data-bs-target="#platsSucreModal-{{ plats.id }}">{{ plats.titre }}</a>
+                            </td>
+                            <td class="col-md-3">
+                                {{ plats.prix/100 | number_format() }} €
+                            </td>
+                            <td class="col-md-2">
+                                <span id="btSucreMoins-{{ plats.id }}">
+                                    <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
+                                </span>
+
+                                <span id="qteSucre-{{ plats.id }}">
+{#                                    {{ quantite }} #}
+                                </span>
+
+                                <span id="btSucrePlus-{{ plats.id }}">
+                                    <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
+                                </span>
+
+                            </td>
+                            <td class="col-md-3">
+                                <span class="totalLigne" id="totalSucre-{{ plats.id }}">
+{#                                    {{ total }} #}
+                                </span>
+                                €
+                            </td>
+                        </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="platsSucreModal-{{ plats.id }}" tabindex="-1"
+                             aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">{{ plats.titre }}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ plats.description | raw }}
+                                        {% if imagesplats is not empty %}
+                                            <div class="mt-3">
+                                                <div id="carouselExampleIndicators" class="carousel slide p-3 "
+                                                     data-bs-ride="carousel">
+                                                    <div class="carousel-inner">
+
+                                                        {% for imagesplats in plats.images %}
+
+                                                            <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                                                <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
+                                                                     class="d-block w-100 h-100 rounded-2"
+                                                                     alt="images plats">
+                                                            </div>
+
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
 
         <hr>
-        <div id="laReservation" style="display: none">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Plats Salé</th>
-                    <th>Prix</th>
-                    <th>Quantité</th>
-                    <th>Total</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for elementSale in platsSales %}
-                    <tr>
-                        <td class="col-md-4">
-                            <a href="#" data-bs-toggle="modal"
-                               data-bs-target="#platsSaleModal-{{ elementSale.id }}">{{ elementSale.titre }}</a>
-                        </td>
-                        <td class="col-md-3">
-                            {{ elementSale.prix/100 | number_format() }} €
-                        </td>
-                        <td class="col-md-2">
-                        <span id="btSaleMoins-{{ elementSale.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
-                        </span>
 
-                            <script>
-                                //JQuery
-                                $("#btSaleMoins-{{ elementSale.id }}").click(function () {
-                                    maQte = $("#qteSale-{{ elementSale.id }}").html();
-                                    if (maQte > 0) {
-                                        maQte--
-                                        $("#qteSale-{{ elementSale.id }}").html(maQte);
+        {#            <div class="text-end"> #}
+        {#                <h3>Total Panier</h3> #}
+        {#                <h3><span id="totalGeneral">{{ totalGeneral }}</span> €</h3> #}
+        {#            </div> #}
 
-                                        monTotal = $("#totalSale-{{ elementSale.id }}").html();
-                                        monTotal = (maQte * {{ elementSale.prix }}) / 100;
-                                        $("#totalSale-{{ elementSale.id }}").html(monTotal);
+        {#            #}{#        //TODO a cacher #}
+        {#            <div class="text-end"> #}
+        {#                <h3><span id="totalGeneralDuree">{{ totalDuree }}</span> min</h3> #}
+        {#            </div> #}
 
-                                        monTotalDuree = $("#totalSaleDuree-{{ elementSale.id }}").html();
-                                        monTotalDuree = maQte * {{ elementSale.duree }};
-                                        $("#totalSaleDuree-{{ elementSale.id }}").html(monTotalDuree);
+        <div id="calendrierHeure"></div>
 
-                                        //Prix Panier Total
-                                        var somme = 0;
-                                        $(".totalLigne").each(function () {
-                                            var valeur = $(this).text();
-                                            somme += parseFloat(valeur);
-                                            somme = Math.abs(somme);
-                                        });
-                                        $("#totalGeneral").text(somme);
+    </div>
 
-                                        //Duree Panier Total
-                                        var dureeTotal = 0;
-                                        $(".totalLigneDuree").each(function () {
-                                            var valeur = $(this).text();
-                                            dureeTotal += parseInt(valeur);
-                                            dureeTotal = Math.abs(dureeTotal)
-                                        })
-                                        $("#totalGeneralDuree").text(dureeTotal)
-
-                                        //AJAX
-                                        dataString = "prix={{ elementSale.prix }}";
-                                        dataString += "&plat={{ elementSale.titre }}";
-                                        dataString += "&idPlatSale={{ elementSale.id }}";
-                                        dataString += "&qteSale=" + maQte;
-                                        dataString += "&monJour=" + monJour;
-                                        dataString += "&dureePlat={{ elementSale.duree }}";
-
-
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "{{ path('addOrUpdatePlatsSale') }}",
-                                            data: dataString,
-                                            dataType: 'json',
-                                            success: function (data) {
-                                            }
-                                        });
-                                    }
-                                })
-                            </script>
-
-                            <span id="qteSale-{{ elementSale.id }}">
-                            {{ quantite }}
-                        </span>
-
-                            <span id="btSalePlus-{{ elementSale.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
-                        </span>
-
-                            <script>
-                                //JQuery
-                                $("#btSalePlus-{{ elementSale.id }}").click(function () {
-                                    maQte = $("#qteSale-{{ elementSale.id }}").html();
-                                    maQte++;
-                                    $("#qteSale-{{ elementSale.id }}").html(maQte);
-
-                                    monTotal = $("#totalSale-{{ elementSale.id }}").html();
-                                    monTotal = (maQte * {{ elementSale.prix }}) / 100;
-                                    $("#totalSale-{{ elementSale.id }}").html(monTotal);
-
-                                    monTotalDuree = $("#totalSaleDuree-{{ elementSale.id }}").html();
-                                    monTotalDuree = maQte * {{ elementSale.duree }};
-                                    $("#totalSaleDuree-{{ elementSale.id }}").html(monTotalDuree);
-
-                                    //Prix Panier Total
-                                    var somme = 0;
-                                    $(".totalLigne").each(function () {
-                                        var valeur = $(this).text();
-                                        somme += parseFloat(valeur);
-                                    });
-                                    $("#totalGeneral").text(somme);
-
-                                    //Duree Panier Total
-                                    var dureeTotal = 0;
-                                    $(".totalLigneDuree").each(function () {
-                                        var valeur = $(this).text();
-                                        dureeTotal += parseInt(valeur);
-                                        dureeTotal = Math.abs(dureeTotal)
-                                    })
-                                    $("#totalGeneralDuree").text(dureeTotal)
-
-                                    //AJAX
-                                    dataString = "prix={{ elementSale.prix }}";
-                                    dataString += "&plat={{ elementSale.titre }}";
-                                    dataString += "&idPlatSale={{ elementSale.id }}";
-                                    dataString += "&qteSale=" + maQte;
-                                    dataString += "&monJour=" + monJour;
-                                    dataString += "&dureePlat={{ elementSale.duree }}";
-
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "{{ path('addOrUpdatePlatsSale') }}",
-                                        data: dataString,
-                                        dataType: 'json',
-                                        success: function (data) {
-                                        }
-                                    });
-                                })
-                            </script>
-
-                        </td>
-                        <td class="col-md-3">
-                        <span class="totalLigne" id="totalSale-{{ elementSale.id }}">
-                            {{ total }}
-                        </span>
-                            €
-                        </td>
-
-                        {# TODO a cacher #}
-                        <td class="">
-                        <span class="totalLigneDuree" id="totalSaleDuree-{{ elementSale.id }}">
-                            {{ duree }}
-                        </span>
-                            min
-                        </td>
-
-                    </tr>
-
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="platsSaleModal-{{ elementSale.id }}" tabindex="-1"
-                         aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ elementSale.titre | raw }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {{ elementSale.description | raw }}
-                                    {% if imagesPlatsSales is not empty %}
-                                        <div class="mt-3">
-                                            <div id="carouselExampleIndicators" class="carousel slide p-3 "
-                                                 data-bs-ride="carousel">
-                                                <div class="carousel-inner">
-
-                                                    {% for imagesPlatsSale in elementSale.imagesPlatsSales %}
-
-                                                        <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                                            <img src="{{ asset('asset/images/' ~ imagesPlatsSale.imageName) }}"
-                                                                 class="d-block w-100 h-100 rounded-2"
-                                                                 alt="images plats">
-                                                        </div>
-
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th colspan="4">Plats Sucré</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for elementSucre in platsSucres %}
-                    <tr>
-                        <td class="col-md-4">
-                            <a href="#" data-bs-toggle="modal"
-                               data-bs-target="#platsSucreModal-{{ elementSucre.id }}">{{ elementSucre.titre }}</a>
-                        </td>
-                        <td class="col-md-3">
-                            {{ elementSucre.prix/100 | number_format() }} €
-                        </td>
-                        <td class="col-md-2">
-                        <span id="btSucreMoins-{{ elementSucre.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
-                        </span>
-
-                            <script>
-                                //JQuery
-                                $("#btSucreMoins-{{ elementSucre.id }}").click(function () {
-                                    maQte = $("#qteSucre-{{ elementSucre.id }}").html();
-                                    if (maQte > 0) {
-                                        maQte--
-                                        $("#qteSucre-{{ elementSucre.id }}").html(maQte);
-
-                                        monTotal = $("#totalSucre-{{ elementSucre.id }}").html();
-                                        monTotal = (maQte * {{ elementSucre.prix }}) / 100;
-                                        $("#totalSucre-{{ elementSucre.id }}").html(monTotal);
-
-                                        monTotalDuree = $("#totalSucreDuree-{{ elementSucre.id }}").html();
-                                        monTotalDuree = maQte * {{ elementSucre.duree }};
-                                        $("#totalSucreDuree-{{ elementSucre.id }}").html(monTotalDuree);
-
-
-                                        //Prix Panier Total
-                                        var somme = 0;
-                                        $(".totalLigne").each(function () {
-                                            var valeur = $(this).text();
-                                            somme += parseFloat(valeur);
-                                            somme = Math.abs(somme);
-                                        });
-                                        $("#totalGeneral").text(somme);
-
-                                        //Duree Panier Total
-                                        var dureeTotal = 0;
-                                        $(".totalLigneDuree").each(function () {
-                                            var valeur = $(this).text();
-                                            dureeTotal += parseInt(valeur);
-                                            dureeTotal = Math.abs(dureeTotal)
-                                        })
-                                        $("#totalGeneralDuree").text(dureeTotal)
-
-                                        //AJAX
-                                        dataString = "prix={{ elementSucre.prix }}";
-                                        dataString += "&plat={{ elementSucre.titre }}";
-                                        dataString += "&idPlatSucre={{ elementSucre.id }}";
-                                        dataString += "&qteSucre=" + maQte;
-                                        dataString += "&monJour=" + monJour;
-                                        dataString += "&dureePlat={{ elementSucre.duree }}";
-
-                                        $.ajax({
-                                            type: "POST",
-                                            url: "{{ path('addOrUpdatePlatsSucre') }}",
-                                            data: dataString,
-                                            dataType: 'json',
-                                            success: function (data) {
-                                            }
-                                        });
-                                    }
-                                })
-                            </script>
-
-                            <span id="qteSucre-{{ elementSucre.id }}">
-                            {{ quantite }}
-                        </span>
-
-                            <span id="btSucrePlus-{{ elementSucre.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
-                        </span>
-
-                            <script>
-                                //JQuery
-                                $("#btSucrePlus-{{ elementSucre.id }}").click(function () {
-                                    maQte = $("#qteSucre-{{ elementSucre.id }}").html();
-                                    maQte++;
-                                    $("#qteSucre-{{ elementSucre.id }}").html(maQte);
-
-                                    monTotal = $("#totalSucre-{{ elementSucre.id }}").html();
-                                    monTotal = (maQte * {{ elementSucre.prix }}) / 100;
-                                    $("#totalSucre-{{ elementSucre.id }}").html(monTotal);
-
-                                    monTotalDuree = $("#totalSucreDuree-{{ elementSucre.id }}").html();
-                                    monTotalDuree = maQte * {{ elementSucre.duree }};
-                                    $("#totalSucreDuree-{{ elementSucre.id }}").html(monTotalDuree);
-
-
-                                    //Prix Panier Total
-                                    var somme = 0;
-                                    $(".totalLigne").each(function () {
-                                        var valeur = $(this).text();
-                                        somme += parseFloat(valeur);
-                                    });
-                                    $("#totalGeneral").text(somme);
-
-                                    //Duree Panier Total
-                                    var dureeTotal = 0;
-                                    $(".totalLigneDuree").each(function () {
-                                        var valeur = $(this).text();
-                                        dureeTotal += parseInt(valeur);
-                                        dureeTotal = Math.abs(dureeTotal)
-                                    })
-                                    $("#totalGeneralDuree").text(dureeTotal)
-
-                                    //AJAX
-                                    dataString = "prix={{ elementSucre.prix }}";
-                                    dataString += "&plat={{ elementSucre.titre }}";
-                                    dataString += "&idPlatSucre={{ elementSucre.id }}";
-                                    dataString += "&qteSucre=" + maQte;
-                                    dataString += "&monJour=" + monJour;
-                                    dataString += "&dureePlat={{ elementSucre.duree }}";
-
-                                    $.ajax({
-                                        type: "POST",
-                                        url: "{{ path('addOrUpdatePlatsSucre') }}",
-                                        data: dataString,
-                                        dataType: 'json',
-                                        success: function (data) {
-                                        }
-                                    });
-                                })
-                            </script>
-
-                        </td>
-                        <td class="col-md-3">
-                        <span class="totalLigne" id="totalSucre-{{ elementSucre.id }}">
-                            {{ total }}
-                        </span>
-                            €
-                        </td>
-
-                        {# TODO a cacher #}
-                        <td class="">
-                        <span class="totalLigneDuree" id="totalSucreDuree-{{ elementSucre.id }}">
-                            {{ duree }}
-                        </span>
-                            min
-                        </td>
-                    </tr>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="platsSucreModal-{{ elementSucre.id }}" tabindex="-1"
-                         aria-labelledby="exampleModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">{{ elementSucre.titre }}</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    {{ elementSucre.description | raw }}
-                                    {% if imagesPlatsSucres is not empty %}
-                                        <div class="mt-3">
-                                            <div id="carouselExampleIndicators" class="carousel slide p-3 "
-                                                 data-bs-ride="carousel">
-                                                <div class="carousel-inner">
-
-                                                    {% for imagesPlatsSucre in elementSucre.imagesPlatsSucres %}
-
-                                                        <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                                            <img src="{{ asset('asset/images/' ~ imagesPlatsSucre.imageName) }}"
-                                                                 class="d-block w-100 h-100 rounded-2"
-                                                                 alt="images plats">
-                                                        </div>
-
-                                                    {% endfor %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                {% else %}
-                    <tr>
-                        <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
-                    </tr>
-
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <hr>
-
-            <div class="text-end">
-                <h3>Total Panier</h3>
-                <h3><span id="totalGeneral">{{ totalGeneral }}</span> €</h3>
-            </div>
-
-            {#        //TODO a cacher #}
-            <div class="text-end">
-                <h3><span id="totalGeneralDuree">{{ totalDuree }}</span> min</h3>
-            </div>
-
-            <hr>
-
-            <div id="calendrierHeure"></div>
-
+    <div class="row">
+        <div class="liens">
+            <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
+            <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
         </div>
-
-        <div class="row">
-            <div class="liens">
-                <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
-                <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
-            </div>
-        </div>
+    </div>
     </div>
 
 {% endblock %}
