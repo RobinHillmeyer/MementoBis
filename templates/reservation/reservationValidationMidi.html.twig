@@ -27,6 +27,8 @@
 
         <h3>Pour un Total de {{ total/100 | number_format() }}€</h3>
 
+        <hr>
+
         <h2>La commande sera disponible dans {{ tempsTotal }} min </h2>
 
         <div>Une fois le paiement validé, un message vous sera envoyé au {{ user.telephone }}, ainsi qu'un mail a l'adresse suivante : {{ user.email }}</div>
