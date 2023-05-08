@@ -4,36 +4,40 @@
 
 {% block body %}
 
-{#    <div class="container mx-auto">#}
+    <h2>{{ "now"|format_datetime('full', 'short', locale='fr') }}</h2>
+    <hr>
+    <div class="container mx-auto">
 
-{#        <div class="row text-center">#}
-{#            <div class="col-md-12">#}
-{#                {{ form_start(resaUserForm) }}#}
+        <h3> {{ user.prenom }}, voici un résumé de votre panier :</h3>
 
-{#                <div class="row">#}
-{#                    <div class="col-md-6">#}
-{#                        {{ form_row(resaUserForm.Prenom) }}#}
-{#                    </div>#}
+        {% set total = null %}
+        {% set tempsTotal = null %}
+        {% for item in panier %}
+            {% set total = total + (item.plat.prix * item.quantite) %}
+            {% set tempsTotal = tempsTotal + item.plat.duree %}
+            <table>
+                <tr>
+                    <td><span>{{ item.quantite }}x</span></td>
+                    <td><span style="padding-left: 1rem">{{ item.plat.titre }}</span></td>
+                </tr>
+            </table>
+        {% endfor %}
 
-{#                    <div class="col-md-6">#}
-{#                        {{ form_row(resaUserForm.Nom) }}#}
-{#                    </div>#}
-{#                </div>#}
+        <hr>
 
-{#                <div class="row">#}
-{#                    <div class="col-md-6">#}
-{#                        {{ form_row(resaUserForm.email) }}#}
-{#                    </div>#}
+        <h3>Pour un Total de {{ total/100 | number_format() }}€</h3>
 
-{#                    <div class="col-md-6">#}
-{#                        {{ form_row(resaUserForm.telephone) }}#}
-{#                    </div>#}
-{#                </div>#}
+        <h2>La commande sera disponible dans {{ tempsTotal }} min </h2>
 
-{#                {{ form_end(resaUserForm) }}#}
-{#            </div>#}
-{#        </div>#}
+        <div>Une fois le paiement validé, un message vous sera envoyé au {{ user.telephone }}, ainsi qu'un mail a l'adresse suivante : {{ user.email }}</div>
 
-{#    </div>#}
+    </div>
+
+    <div class="row">
+        <div class="liens">
+            <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
+            <h2><a href="{{ path('reservation_midi') }}" class="btn btn-primary">Retour</a></h2>
+        </div>
+    </div>
 
 {% endblock %}

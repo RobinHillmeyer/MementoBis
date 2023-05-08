@@ -2,18 +2,12 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
-
-//use App\Form\ResaMidiType;
 use App\Repository\CategoriesRepository;
 use App\Repository\ImageRepository;
 use App\Repository\PlatRepository;
 use App\Repository\TexteRepository;
-use App\Repository\UserRepository;
 use App\Service\PanierService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -43,6 +37,11 @@ class ReservationController extends AbstractController
                          PanierService   $panierService
     ): Response
     {
+
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
         $plats = $platRepository->findAll();
         $imagesplats = $imageRepository->findBy(array('plat' => $plats));
 
@@ -54,14 +53,14 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/midi/add/{id}', name: 'add')]
+    #[Route('/midi/add/{id<\d+>}', name: 'add')]
     public function addToRoute(PanierService $panierService, int $id): Response
     {
         $panierService->addToCart($id);
         return $this->redirectToRoute('reservation_midi');
     }
 
-    #[Route('/midi/remove/{id}', name: 'remove')]
+    #[Route('/midi/remove/{id<\d+>}', name: 'remove')]
     public function RemoveToRoute(PanierService $panierService, int $id): Response
     {
         $panierService->removeToCart($id);
@@ -76,22 +75,15 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/validationMidi', name: 'validationMidi')]
-    public function ValidationMidi(EntityManagerInterface $entityManager, Request $request): Response
+    public function ValidationMidi(PanierService   $panierService): Response
     {
-        $user = new User();
-        $resaUserForm = $this->createForm(ResaMidiType::class, $user);
-        $resaUserForm->handleRequest($request);
-
-        if ($resaUserForm->isSubmitted() && $resaUserForm->isValid()) {
-
-            $entityManager->persist($user);
-            $entityManager->flush();
-
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('reservation/reservationValidationMidi.html.twig', [
-            'resaUserForm' => $resaUserForm->createView(),
-            'user' => $user
+            'user' => $this->getUser(),
+            'panier' => $panierService->getTotal(),
         ]);
     }
 

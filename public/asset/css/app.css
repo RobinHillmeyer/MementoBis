@@ -250,6 +250,7 @@ footer {
     .liens {
         flex-direction: column;
     }
+
     h2 {
         margin-bottom: 30px;
     }

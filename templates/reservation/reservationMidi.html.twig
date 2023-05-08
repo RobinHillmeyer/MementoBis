@@ -4,14 +4,12 @@
 
 {% block body %}
 
-    <div>{{ "now" | date() }}</div>
-
-    {{ dump(panier) }}
+    <h2>{{ "now"|format_datetime('full', 'short', locale='fr') }}</h2>
 
     <hr>
 
-    <div id="col">
-        <div style="float:left;width:50%;">
+    <div style="column-count: 2">
+        <div style="flex-direction: column">
             <table class="table">
                 <thead>
                 <tr>
@@ -174,49 +172,48 @@
                 </tbody>
             </table>
         </div>
-
-        <div style="float:left;width:50%;padding-left: 1rem">
-
-            <h1>Panier</h1>
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Plats</th>
-                    <th>Quantité</th>
-                </tr>
-                </thead>
-                {% set total = null %}
-                {% for item in panier %}
-                    {% set total = total + (item.plat.prix * item.quantite) %}
-                    <tbody>
-                    <tr>
-                        <td class="col-md-3">
-                            <span>{{ item.plat.titre }}</span>
-                        </td>
-                        <td class="col-md-1">
-                            <span>{{ item.quantite }}</span>
-                        </td>
-                    </tr>
-                    </tbody>
-                {% endfor %}
-            </table>
-        </div>
-
         <div>
-            <div class="text-center">
-                <h2>Total :
+            <div style="flex-direction: column">
 
-                    {{ total/100 | number_format() }}
-                    €
-                    <span class="p-1"><a href="{{ path('reservation_removeAll')}}"><i
-                                    class="fa-sharp fa-solid fa-trash-can"
-                                    style="color:darkred"></i></a></span></h2></div>
+                <h1>Panier</h1>
 
-            <div class="row">
-                <div class="liens">
-                    <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
-                    <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Plats</th>
+                        <th>Quantité</th>
+                    </tr>
+                    </thead>
+                        {% set total = null %}
+                        {% for item in panier %}
+                            {% set total = total + (item.plat.prix * item.quantite) %}
+                            <tbody>
+                            <tr>
+                                <td class="col-md-3">
+                                    <span>{{ item.plat.titre }}</span>
+                                </td>
+                                <td class="col-md-1">
+                                    <span>{{ item.quantite }}</span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        {% endfor %}
+                </table>
+            </div>
+
+            <div>
+                <div class="text-center">
+                    <h2>Total :
+                        {{ total/100 | number_format() }} €
+                        <span class="p-1"><a href="{{ path('reservation_removeAll') }}"><i
+                                        class="fa-sharp fa-solid fa-trash-can"
+                                        style="color:darkred"></i></a></span></h2></div>
+
+                <div class="row">
+                    <div class="liens">
+                        <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
+                        <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
+                    </div>
                 </div>
             </div>
         </div>

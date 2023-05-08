@@ -25,9 +25,6 @@ class Image
     #[ORM\Column(type: 'datetime')]
     private ?\DateTimeInterface $updatedAt = null;
 
-//    #[ORM\Column(length: 50, nullable: true)]
-//    private ?string $titre = null;
-
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Plat $plat = null;
 
@@ -86,18 +83,6 @@ class Image
         return $this;
     }
 
-//    public function getTitre(): ?string
-//    {
-//        return $this->titre;
-//    }
-//
-//    public function setTitre(string $titre): self
-//    {
-//        $this->titre = $titre;
-//
-//        return $this;
-//    }
-
     public function getPlat(): ?Plat
     {
         return $this->plat;
@@ -122,8 +107,4 @@ class Image
         return $this;
     }
 
-//    public function __toString(): string
-//    {
-//        return $this->imageName;
-//    }
 }

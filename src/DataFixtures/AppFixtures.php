@@ -29,7 +29,7 @@ class AppFixtures extends Fixture
             ->setPrenom($faker->firstName())
             ->setNom($faker->lastName())
             ->setRoles((array)'ROLE_ADMIN')
-            ->setTelephone(+33610755754);
+            ->setTelephone(0610755754);
 
 
         $password = $this->hasher->hashPassword($user, 'admin');
