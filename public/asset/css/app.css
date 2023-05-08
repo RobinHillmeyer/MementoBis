@@ -241,6 +241,11 @@ footer {
     z-index: 999;
 }
 
+#col {
+    column-count: 2;
+    columns: 10em;
+}
+
 @media screen and (max-width: 480px) {
     .liens {
         flex-direction: column;

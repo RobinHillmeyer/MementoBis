@@ -6,220 +6,219 @@
 
     <div>{{ "now" | date() }}</div>
 
-
-    {#    <div class="container mx-auto"> #}
-    {#        <div class="row text-center"> #}
-    {#            <div id="calendrierJour"></div> #}
-    {#        </div> #}
+    {{ dump(panier) }}
 
     <hr>
 
-    <div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Plats Salé</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for plats in plats %}
-                {% if plats.saveur == 0 %}
-                    {% if plats.etat == true %}
-                        <tr>
-                            <td class="col-md-4">
-                                <a href="#" class="text-decoration-none" data-bs-toggle="modal"
-                                   data-bs-target="#platsSaleModal-{{ plats.id }}">{{ plats.titre }}</a>
-                            </td>
-                            <td class="col-md-3">
-                                {{ plats.prix/100 | number_format() }} €
-                            </td>
-                            <td class="col-md-2">
-                        <span id="btSaleMoins-{{ plats.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
-                        </span>
+    <div id="col">
+        <div style="float:left;width:50%;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Plats Salé</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for plats in plats %}
+                    {% if plats.saveur == 0 %}
+                        {% if plats.etat == true %}
+                            <tr>
+                                <td class="col-md-2">
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                       data-bs-target="#platsSaleModal-{{ plats.id }}">{{ plats.titre }}</a>
+                                </td>
+                                <td class="col-md-1">
+                                    {{ plats.prix/100 | number_format() }} €
+                                </td>
 
-                                <span id="qteSale-{{ plats.id }}">
-{#                            {{ quantite }} #}
-                        </span>
+                                <td class="col-md-2">
+                                <span class="p-1"><a href="{{ path('reservation_remove', {id: plats.id}) }}"><i
+                                                class="fa-sharp fa-solid fa-circle-minus fa-xl"
+                                                style="color: darkred"></i></a></span>
 
-                                <span id="btSalePlus-{{ plats.id }}">
-                            <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
-                        </span>
-
-                            </td>
-                            <td class="col-md-3">
-                        <span class="totalLigne" id="totalSale-{{ plats.id }}">
-{#                            {{ total }} #}
-                        </span>
-                                €
-                            </td>
-
-                        </tr>
+                                    <span class="p-1"><a href="{{ path('reservation_add', {id: plats.id}) }}"><i
+                                                    class="fa-sharp fa-solid fa-circle-plus fa-xl"
+                                                    style="color: green"></i></a></span>
+                                </td>
+                            </tr>
 
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="platsSaleModal-{{ plats.id }}" tabindex="-1"
-                             aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title"
-                                            id="exampleModalLabel">{{ plats.titre | raw }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {{ plats.description | raw }}
-                                        {% if imagesplats is not empty %}
-                                            <div class="mt-3">
-                                                <div id="carouselExampleIndicators" class="carousel slide p-3 "
-                                                     data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
+                            <!-- Modal -->
+                            <div class="modal fade" id="platsSaleModal-{{ plats.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="exampleModalLabel">{{ plats.titre | raw }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ plats.description | raw }}
+                                            {% if imagesplats is not empty %}
+                                                <div class="mt-3">
+                                                    <div id="carouselExampleIndicators" class="carousel slide p-3 "
+                                                         data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
 
-                                                        {% for imagesplats in plats.images %}
+                                                            {% for imagesplats in plats.images %}
 
-                                                            <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                                                <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
-                                                                     class="d-block w-100 h-100 rounded-2"
-                                                                     alt="images plats">
-                                                            </div>
+                                                                <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                                                    <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
+                                                                         class="d-block w-100 h-100 rounded-2"
+                                                                         alt="images plats">
+                                                                </div>
 
-                                                        {% endfor %}
+                                                            {% endfor %}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {% endif %}
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
-                        </tr>
+
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
-            </tbody>
-        </table>
+                {% endfor %}
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Plats Sucré</th>
-                <th>Prix</th>
-                <th>Quantité</th>
-                <th>Total</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for plats in plats %}
-                {% if plats.saveur == 1 %}
-                    {% if plats.etat == true %}
-                        <tr>
-                            <td class="col-md-4">
-                                <a href="#" class="text-decoration-none" data-bs-toggle="modal"
-                                   data-bs-target="#platsSucreModal-{{ plats.id }}">{{ plats.titre }}</a>
-                            </td>
-                            <td class="col-md-3">
-                                {{ plats.prix/100 | number_format() }} €
-                            </td>
-                            <td class="col-md-2">
-                                <span id="btSucreMoins-{{ plats.id }}">
-                                    <i class="fa-sharp fa-solid fa-circle-minus fa-xl" style="color: darkred"></i>
-                                </span>
 
-                                <span id="qteSucre-{{ plats.id }}">
-{#                                    {{ quantite }} #}
-                                </span>
+                </tbody>
+            </table>
 
-                                <span id="btSucrePlus-{{ plats.id }}">
-                                    <i class="fa-sharp fa-solid fa-circle-plus fa-xl" style="color: green"></i>
-                                </span>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Plats Sucré</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for plats in plats %}
+                    {% if plats.saveur == 1 %}
+                        {% if plats.etat == true %}
+                            <tr>
+                                <td class="col-md-2">
+                                    <a href="#" class="text-decoration-none" data-bs-toggle="modal"
+                                       data-bs-target="#platsSucreModal-{{ plats.id }}">{{ plats.titre }}</a>
+                                </td>
+                                <td class="col-md-1">
+                                    {{ plats.prix/100 | number_format() }} €
+                                </td>
+                                <td class="col-md-2">
+                                <span class="p-1"><a href="{{ path('reservation_remove', {id: plats.id}) }}"><i
+                                                class="fa-sharp fa-solid fa-circle-minus fa-xl"
+                                                style="color: darkred"></i></a></span>
 
-                            </td>
-                            <td class="col-md-3">
-                                <span class="totalLigne" id="totalSucre-{{ plats.id }}">
-{#                                    {{ total }} #}
-                                </span>
-                                €
-                            </td>
-                        </tr>
+                                    <span class="p-1"><a href="{{ path('reservation_add', {id: plats.id}) }}"><i
+                                                    class="fa-sharp fa-solid fa-circle-plus fa-xl"
+                                                    style="color: green"></i></a></span>
+                                </td>
+                            </tr>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="platsSucreModal-{{ plats.id }}" tabindex="-1"
-                             aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">{{ plats.titre }}</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        {{ plats.description | raw }}
-                                        {% if imagesplats is not empty %}
-                                            <div class="mt-3">
-                                                <div id="carouselExampleIndicators" class="carousel slide p-3 "
-                                                     data-bs-ride="carousel">
-                                                    <div class="carousel-inner">
+                            <!-- Modal -->
+                            <div class="modal fade" id="platsSucreModal-{{ plats.id }}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">{{ plats.titre }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ plats.description | raw }}
+                                            {% if imagesplats is not empty %}
+                                                <div class="mt-3">
+                                                    <div id="carouselExampleIndicators" class="carousel slide p-3 "
+                                                         data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
 
-                                                        {% for imagesplats in plats.images %}
+                                                            {% for imagesplats in plats.images %}
 
-                                                            <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                                                <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
-                                                                     class="d-block w-100 h-100 rounded-2"
-                                                                     alt="images plats">
-                                                            </div>
+                                                                <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                                                    <img src="{{ asset('asset/images/' ~ imagesplats.imageName) }}"
+                                                                         class="d-block w-100 h-100 rounded-2"
+                                                                         alt="images plats">
+                                                                </div>
 
-                                                        {% endfor %}
+                                                            {% endfor %}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        {% endif %}
+                                            {% endif %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    {% else %}
-                        <tr>
-                            <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
-                        </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">Oups, aucun plats a afficher !</td>
+                            </tr>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-            {% endfor %}
-            </tbody>
-        </table>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
 
-        <hr>
+        <div style="float:left;width:50%;padding-left: 1rem">
 
-        {#            <div class="text-end"> #}
-        {#                <h3>Total Panier</h3> #}
-        {#                <h3><span id="totalGeneral">{{ totalGeneral }}</span> €</h3> #}
-        {#            </div> #}
+            <h1>Panier</h1>
 
-        {#            #}{#        //TODO a cacher #}
-        {#            <div class="text-end"> #}
-        {#                <h3><span id="totalGeneralDuree">{{ totalDuree }}</span> min</h3> #}
-        {#            </div> #}
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Plats</th>
+                    <th>Quantité</th>
+                </tr>
+                </thead>
+                {% set total = null %}
+                {% for item in panier %}
+                    {% set total = total + (item.plat.prix * item.quantite) %}
+                    <tbody>
+                    <tr>
+                        <td class="col-md-3">
+                            <span>{{ item.plat.titre }}</span>
+                        </td>
+                        <td class="col-md-1">
+                            <span>{{ item.quantite }}</span>
+                        </td>
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
 
-        <div id="calendrierHeure"></div>
+        <div>
+            <div class="text-center">
+                <h2>Total :
 
-    </div>
+                    {{ total/100 | number_format() }}
+                    €
+                    <span class="p-1"><a href="{{ path('reservation_removeAll')}}"><i
+                                    class="fa-sharp fa-solid fa-trash-can"
+                                    style="color:darkred"></i></a></span></h2></div>
 
-    <div class="row">
-        <div class="liens">
-            <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
-            <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
+            <div class="row">
+                <div class="liens">
+                    <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
+                    <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-
 {% endblock %}
