@@ -240,10 +240,8 @@ footer {
     top: 70px;
     z-index: 999;
 }
-
-#col {
+.col {
     column-count: 2;
-    columns: 10em;
 }
 
 @media screen and (max-width: 480px) {
@@ -264,4 +262,9 @@ footer {
     .logo-link {
         width: 30%;
     }
+
+    .col {
+        column-count: auto;
+    }
+
 }

@@ -6,6 +6,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <a>
+                {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
+                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% elseif app.user %}
+                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                {% else %}
+                    <li><a class="nav-link active" href="{{ path('app_login') }}">Se connecter</a></li>
+                    <li><a class="nav-link active" href="{{ path('app_register') }}">S'inscrire</a></li>
+                {% endif %}
+            </a>
                     <button type="button" class="btn btn-primary">
                         <a class="nav-link active" href="{{ path('reservation_home') }}">Accueil/Réservation</a>
                     </button>
