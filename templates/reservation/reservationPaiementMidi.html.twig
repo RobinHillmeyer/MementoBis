@@ -11,14 +11,16 @@
 
         {% set total = null %}
         {% set tempsTotal = null %}
+        {% set NResa = null %}
         {% for item in panier %}
             {% set total = total + (item.plat.prix * item.quantite) %}
             {% set tempsTotal = tempsTotal + item.plat.duree %}
+            {% set NResa = random() %}
         {% endfor %}
 
         <hr>
 
-        <h2>Le numéro de réservation est le ...</h2>
+        <h2>Le numéro de réservation est le N°{{ NResa }}</h2>
         <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
     </div>
 

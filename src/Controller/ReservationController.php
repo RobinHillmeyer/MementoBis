@@ -79,7 +79,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/validationMidi', name: 'validationMidi')]
-    public function ValidationMidi(PanierService   $panierService): Response
+    public function ValidationMidi(PanierService $panierService): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
@@ -93,7 +93,9 @@ class ReservationController extends AbstractController
 
     #[Route('/paiementMidi', name: 'paiementMidi')]
     public function PaiementMidi(PanierService   $panierService,
-                                 MailerInterface $mailer): Response
+                                 MailerInterface $mailer,
+
+    ): Response
     {
         if (!$this->getUser()) {
             return $this->redirectToRoute('app_login');
@@ -111,14 +113,17 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/email', name: 'email')]
-    public function Email(PanierService   $panierService,
-                          MailerInterface $mailer): Response
+    public function Email(PanierService          $panierService,
+                          MailerInterface        $mailer,
+
+    ): Response
     {
         $user = new User();
         if ($this->getUser()) {
             $user->setPrenom($this->getUser()->getPrenom())
                 ->setEmail($this->getUser()->getEmail());
         }
+
 
         //EmailClient
         $email = (new Email())

@@ -14,7 +14,7 @@
         {% set tempsTotal = null %}
         {% for item in panier %}
             {% set total = total + (item.plat.prix * item.quantite) %}
-            {% set tempsTotal = tempsTotal + item.plat.duree %}
+            {% set tempsTotal = tempsTotal + item.plat.duree + 2 %}
             <table>
                 <tr>
                     <td>{{ item.quantite }}x</td>
@@ -29,7 +29,7 @@
 
         <hr>
 
-        <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
+        <h2>La commande sera disponible dans {{ tempsTotal }} minutes</h2>
 
         <div>Une fois le paiement validé, un mail de confirmation ainsi que le numéro de réservation vous sera envoyé a
             l'adresse suivante : {{ user.email }}</div>

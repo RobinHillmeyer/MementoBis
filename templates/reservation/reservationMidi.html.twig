@@ -200,16 +200,13 @@
             </div>
 
             <div>
-                <div class="text-center">
+                <div class="text-center col">
                     <h2>Total :
                         {{ total/100 | number_format() }} €
                         <span class="p-1"><a href="{{ path('reservation_removeAll') }}"><i
                                         class="fa-sharp fa-solid fa-trash-can"
                                         style="color:darkred"></i></a></span>
                     </h2>
-                </div>
-
-                <div class="row">
                     <div class="liens">
                         <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
                     </div>

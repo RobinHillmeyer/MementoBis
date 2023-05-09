@@ -238,7 +238,7 @@ footer {
 
 .logo-link {
     /*text-align: center;*/
-    padding-top: 5rem;
+    padding-left: 2rem;
     max-width: 40%
 }
 
@@ -269,7 +269,7 @@ footer {
     }
 
     .logo-link {
-        width: 50%;
+        /*width: 50%;*/
     }
 
     .col {
