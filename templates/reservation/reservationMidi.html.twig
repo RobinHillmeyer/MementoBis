@@ -4,8 +4,8 @@
 
 {% block body %}
 
+    <hr>
     <h2>{{ "now"|format_datetime('full', 'short', locale='fr') }}</h2>
-
     <hr>
 
     <div class="col" style="flex-direction: column">
@@ -31,7 +31,7 @@
                                     {{ plats.prix/100 | number_format() }} €
                                 </td>
 
-                                <td class="col-md-2">
+                                <td class="col-md-1">
                                 <span class="p-1"><a href="{{ path('reservation_remove', {id: plats.id}) }}"><i
                                                 class="fa-sharp fa-solid fa-circle-minus fa-xl"
                                                 style="color: darkred"></i></a></span>
@@ -113,7 +113,7 @@
                                 <td class="col-md-1">
                                     {{ plats.prix/100 | number_format() }} €
                                 </td>
-                                <td class="col-md-2">
+                                <td class="col-md-1">
                                 <span class="p-1"><a href="{{ path('reservation_remove', {id: plats.id}) }}"><i
                                                 class="fa-sharp fa-solid fa-circle-minus fa-xl"
                                                 style="color: darkred"></i></a></span>
@@ -174,8 +174,8 @@
 
         <div>
             <div>
+                <h1 class="borderT">Panier</h1>
                 <table class="table">
-                    <h1>Panier</h1>
                     <thead>
                     <tr>
                         <th>Plats</th>
@@ -187,7 +187,7 @@
                         {% set total = total + (item.plat.prix * item.quantite) %}
                         <tbody>
                         <tr>
-                            <td class="col-md-3">
+                            <td class="col-md-2">
                                 <span>{{ item.plat.titre }}</span>
                             </td>
                             <td class="col-md-1">
@@ -199,14 +199,16 @@
                 </table>
             </div>
 
-            <div>
-                <div class="text-center col">
-                    <h2>Total :
-                        {{ total/100 | number_format() }} €
-                        <span class="p-1"><a href="{{ path('reservation_removeAll') }}"><i
-                                        class="fa-sharp fa-solid fa-trash-can"
-                                        style="color:darkred"></i></a></span>
-                    </h2>
+            <div class="container flex-row">
+                <div class="col">
+                    <div class="liens">
+                        <h2>Total :
+                            {{ total/100 | number_format() }} €
+                            <span class=""><a href="{{ path('reservation_removeAll') }}"><i
+                                            class="fa-sharp fa-solid fa-trash-can"
+                                            style="color:darkred"></i></a></span>
+                        </h2>
+                    </div>
                     <div class="liens">
                         <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
                     </div>

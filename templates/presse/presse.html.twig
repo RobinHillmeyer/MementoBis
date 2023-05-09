@@ -3,42 +3,43 @@
 {% block title %}Presse{% endblock %}
 
 {% block body %}
-
     <div class="container mx-auto">
+        <div>
+            <h1>Presse</h1>
+            <hr>
+            <div>
+                {% for texte in textes %}
+                {% if texte.etat == true %}
+                <div style="padding-top: 1rem">
+                    <span>{{ texte.description | raw }}</span>
+                </div>
+            </div>
 
-        <h1>Presse</h1>
+            <hr>
 
-        <div class="">
-            {% for texte in textes %}
-            {% if texte.etat == true %}
-            <div style="padding-top: 1rem">
-                <span>{{ texte.description | raw }}</span>
+            <div class="text-center">
+                {% if images is not empty %}
+                    <div id="carouselExampleIndicators" class="carousel slide p-3 " data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for images in texte.images %}
+                                <div class="carousel-item {% if loop.first %} active {% endif %}">
+                                    <img src="{{ asset('asset/images/' ~ images.imageName) }}"
+                                         class="d-block w-100 h-100 rounded-5" alt="Image Réservation">
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="text-lg-center text-center pb-5">
+                <h4>Pour nous Contacter par mail :</h4>
+                <a href="#" class="text-decoration-none">
+                    <i class="fa-regular fa-envelope"
+                       style="font-size: 3rem"></i><br>presse@memento-restaurant.com</a>
             </div>
         </div>
-
-        <hr>
-
-        <div class="text-center ">
-            {% if images is not empty %}
-                <div id="carouselExampleIndicators" class="carousel slide p-3 " data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        {% for images in texte.images %}
-                            <div class="carousel-item {% if loop.first %} active {% endif %}">
-                                <img src="{{ asset('asset/images/' ~ images.imageName) }}"
-                                     class="d-block w-100 h-100 rounded-5" alt="Image Réservation">
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        </div>
     </div>
-
-    <div class="text-lg-center pb-5">
-        <h4>Pour nous Contacter par mail :</h4>
-        <a href="#" class="text-decoration-none"><i class="fa-regular fa-envelope" style="font-size: 3rem"></i><br>presse@memento-restaurant.com</a>
-    </div>
-
 {% endblock %}

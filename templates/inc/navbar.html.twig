@@ -1,9 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
     <div class="container-fluid">
-        <a href="{{ path("reservation_home") }}" class="text-decoration-none" style="color:#0c4a6e; padding-top: 0.5rem">
-{#            <img src="{{ asset('asset/icone/Memento.png') }}" alt="Logo Memento"  style="padding-left: 1rem"  width="100rem">#}
-            <h3>MEMENTO</h3>
-        </a>
+        <a href="{{ path("reservation_home") }}" class="text-decoration-none" style="color:#0c4a6e; padding-top: 0.5rem"><h3>MEMENTO</h3></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
                 aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -11,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <button type="button" class="btn btn-primary">
-                    <a class="nav-link active" href="{{ path('reservation_home') }}">Accueil/Réservation</a>
+                    <a class="nav-link active" href="{{ path('reservation_home') }}">Réservation</a>
                 </button>
 
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -38,9 +35,11 @@
 
                 <button type="button" class="btn btn-primary">
                     <a class="nav-link active"
-                       href="{{ path('media_localisation') }}">Contact/Localisation/Média</a>
+                       href="{{ path('media_localisation') }}">Contact | Localisation</a>
                 </button>
-                <div>
+            </ul>
+
+                <div style="justify-self: right">
                     {% if app.user and is_granted('ROLE_ADMIN') %}
                         <button type="button" class="btn btn-primary">
                             <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
@@ -67,7 +66,8 @@
                         </button>
                     {% endif %}
                 </div>
-            </ul>
+
+
         </div>
         <div class="navbar-nav ml-auto collapse navbar-collapse">
             <a href="#" class="nav-item nav-link"><i class="fa-brands fa-facebook"></i></a>

@@ -3,7 +3,7 @@
 {% block title %}Réservation Validation{% endblock %}
 
 {% block body %}
-
+    <hr>
     <h2>{{ "now"|format_datetime('full', 'short', locale='fr') }}</h2>
     <hr>
     <div class="container mx-auto">
@@ -14,7 +14,7 @@
         {% set tempsTotal = null %}
         {% for item in panier %}
             {% set total = total + (item.plat.prix * item.quantite) %}
-            {% set tempsTotal = tempsTotal + item.plat.duree + 2 %}
+            {% set tempsTotal = tempsTotal + item.plat.duree %}
             <table>
                 <tr>
                     <td>{{ item.quantite }}x</td>
@@ -29,7 +29,7 @@
 
         <hr>
 
-        <h2>La commande sera disponible dans {{ tempsTotal }} minutes</h2>
+        <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
 
         <div>Une fois le paiement validé, un mail de confirmation ainsi que le numéro de réservation vous sera envoyé a
             l'adresse suivante : {{ user.email }}</div>
@@ -37,8 +37,8 @@
     </div>
 
     <div class="row">
-        <div class="flex-row liens">
-            <div class="row-cols-1" style="padding-bottom: 3rem">
+        <div class="flex-row liens" style="padding-top: 2rem">
+            <div class="row-cols-1" style="padding-bottom: 2rem">
                 <div>Payer {{  total/100 | number_format()  }} € par Paypal</div>
                 <a href="{{ path('reservation_paiementMidi') }}" class="btn btn-primary">
                     <img src="{{ asset('asset/icone/Paypal_2014_logo.png') }}" alt="" width="30rem">
