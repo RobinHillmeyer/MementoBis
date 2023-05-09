@@ -17,8 +17,8 @@
             {% set tempsTotal = tempsTotal + item.plat.duree %}
             <table>
                 <tr>
-                    <td><span>{{ item.quantite }}x</span></td>
-                    <td><span style="padding-left: 1rem">{{ item.plat.titre }}</span></td>
+                    <td>{{ item.quantite }}x</td>
+                    <td style="padding-left: 1rem">{{ item.plat.titre }}</td>
                 </tr>
             </table>
         {% endfor %}
@@ -29,16 +29,24 @@
 
         <hr>
 
-        <h2>La commande sera disponible dans {{ tempsTotal }} min </h2>
+        <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
 
-        <div>Une fois le paiement validé, un message vous sera envoyé au {{ user.telephone }}, ainsi qu'un mail a l'adresse suivante : {{ user.email }}</div>
+        <div>Une fois le paiement validé, un mail de confirmation ainsi que le numéro de réservation vous sera envoyé a
+            l'adresse suivante : {{ user.email }}</div>
 
     </div>
 
     <div class="row">
-        <div class="liens">
-            <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
-            <h2><a href="{{ path('reservation_midi') }}" class="btn btn-primary">Retour</a></h2>
+        <div class="flex-row liens">
+            <div class="row-cols-1" style="padding-bottom: 3rem">
+                <div>Payer {{  total/100 | number_format()  }} € par Paypal</div>
+                <a href="{{ path('reservation_paiementMidi') }}" class="btn btn-primary">
+                    <img src="{{ asset('asset/icone/Paypal_2014_logo.png') }}" alt="" width="30rem">
+                </a>
+            </div>
+            <div class="m-4 p-1">
+                <a href="{{ path('reservation_midi') }}" class="btn btn-primary">Modifier le Panier</a>
+            </div>
         </div>
     </div>
 

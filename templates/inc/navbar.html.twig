@@ -6,66 +6,66 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <a>
-                {% if app.user and is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
-                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
-                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                {% elseif app.user %}
-                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
-                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                {% else %}
-                    <li><a class="nav-link active" href="{{ path('app_login') }}">Se connecter</a></li>
-                    <li><a class="nav-link active" href="{{ path('app_register') }}">S'inscrire</a></li>
-                {% endif %}
-            </a>
-                    <button type="button" class="btn btn-primary">
-                        <a class="nav-link active" href="{{ path('reservation_home') }}">Accueil/Réservation</a>
-                    </button>
+                <button type="button" class="btn btn-primary">
+                    <a class="nav-link active" href="{{ path('reservation_home') }}">Accueil/Réservation</a>
+                </button>
 
-                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                        <button type="button" class="btn btn-primary">
-                            <a class="dropdown-item" href="{{ path('concept_general') }}">Concept</a>
-                        </button>
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
-                                <a class="dropdown-item" href="{{ path('concept_midi') }}">Concept du Midi</a>
-                                <a class="dropdown-item" href="{{ path('concept_soir') }}">Concept du Soir</a>
-                            </div>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" class="btn btn-primary">
+                        <a class="dropdown-item" href="{{ path('concept_general') }}">Concept</a>
+                    </button>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+                            <a class="dropdown-item" href="{{ path('concept_midi') }}">Concept du Midi</a>
+                            <a class="dropdown-item" href="{{ path('concept_soir') }}">Concept du Soir</a>
                         </div>
                     </div>
+                </div>
 
-                    <button type="button" class="btn btn-primary">
-                        <a class="nav-link active" href="{{ path('cuisine') }}">Cuisine</a>
-                    </button>
+                <button type="button" class="btn btn-primary">
+                    <a class="nav-link active" href="{{ path('cuisine') }}">Cuisine</a>
+                </button>
 
-                    <button type="button" class="btn btn-primary">
-                        <a class="nav-link active" href="{{ path('presse') }}">Presse</a>
-                    </button>
+                <button type="button" class="btn btn-primary">
+                    <a class="nav-link active" href="{{ path('presse') }}">Presse</a>
+                </button>
 
-                    <button type="button" class="btn btn-primary">
-                        <a class="nav-link active"
-                           href="{{ path('media_localisation') }}">Contact/Localisation/Média</a>
-                    </button>
+                <button type="button" class="btn btn-primary">
+                    <a class="nav-link active"
+                       href="{{ path('media_localisation') }}">Contact/Localisation/Média</a>
+                </button>
+                <div>
+                    {% if app.user and is_granted('ROLE_ADMIN') %}
+                        <button type="button" class="btn btn-primary">
+                            <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
+                        </button>
+                        <div class="btn btn-primary noclick">
+                            <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                        </div>
+                        <button type="button" class="btn btn-primary">
+                            <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        </button>
+                    {% elseif app.user %}
+                        <div class="btn btn-primary noclick">
+                            <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
+                        </div>
+                        <button type="button" class="btn btn-primary">
+                            <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary">
+                            <li><a class="nav-link active" href="{{ path('app_login') }}">Se connecter</a></li>
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            <li><a class="nav-link active" href="{{ path('app_register') }}">S'inscrire</a></li>
+                        </button>
+                    {% endif %}
+                </div>
             </ul>
         </div>
-
         <div class="navbar-nav ml-auto collapse navbar-collapse">
-            <a>
-                {% if app.user and is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('admin') }}" class="nav-item nav-link"><i class="fa-solid fa-lock"></i></a>
-                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
-                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                {% elseif app.user %}
-                    <li><a class="nav-link active">Bonjour {{ app.user.prenom }} ! </a></li>
-                    <li><a class="nav-link active" href="{{ path('app_logout') }}">Se déconnecter</a></li>
-                {% else %}
-                    <li><a class="nav-link active" href="{{ path('app_login') }}">Se connecter</a></li>
-                    <li><a class="nav-link active" href="{{ path('app_register') }}">S'inscrire</a></li>
-                {% endif %}
-            </a>
             <a href="#" class="nav-item nav-link"><i class="fa-brands fa-facebook"></i></a>
             <a href="#" class="nav-item nav-link"><i class="fa-brands fa-instagram"></i></a>
             <a href="#" class="nav-item nav-link"><i class="fa-regular fa-envelope"></i></a>

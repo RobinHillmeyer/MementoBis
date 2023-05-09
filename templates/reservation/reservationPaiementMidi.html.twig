@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement Paypal{% endblock %}
+
+{% block body %}
+
+    <hr>
+    <div class="container mx-auto">
+
+        <h1 class="m-2">Merci {{ user.prenom }} pour votre commande !</h1>
+
+        {% set total = null %}
+        {% set tempsTotal = null %}
+        {% for item in panier %}
+            {% set total = total + (item.plat.prix * item.quantite) %}
+            {% set tempsTotal = tempsTotal + item.plat.duree %}
+        {% endfor %}
+
+        <hr>
+
+        <h2>Le numéro de réservation est le ...</h2>
+        <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
+    </div>
+
+{% endblock %}

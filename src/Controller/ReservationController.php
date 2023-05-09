@@ -2,14 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\CategoriesRepository;
 use App\Repository\ImageRepository;
 use App\Repository\PlatRepository;
 use App\Repository\TexteRepository;
 use App\Service\PanierService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 #[Route('/', name: 'reservation_')]
 class ReservationController extends AbstractController
@@ -86,6 +90,60 @@ class ReservationController extends AbstractController
             'panier' => $panierService->getTotal(),
         ]);
     }
+
+    #[Route('/paiementMidi', name: 'paiementMidi')]
+    public function PaiementMidi(PanierService   $panierService,
+                                 MailerInterface $mailer): Response
+    {
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
+
+        if ($this->getUser()) {
+            $this->Email($panierService, $mailer);
+        }
+
+
+        return $this->render('reservation/reservationPaiementMidi.html.twig', [
+            'user' => $this->getUser(),
+            'panier' => $panierService->getTotal(),
+        ]);
+    }
+
+    #[Route('/email', name: 'email')]
+    public function Email(PanierService   $panierService,
+                          MailerInterface $mailer): Response
+    {
+        $user = new User();
+        if ($this->getUser()) {
+            $user->setPrenom($this->getUser()->getPrenom())
+                ->setEmail($this->getUser()->getEmail());
+        }
+
+        //EmailClient
+        $email = (new Email())
+            ->from('Commande@memento.fr')
+            ->to($user->getEmail())
+            ->priority(Email::PRIORITY_HIGH)
+            ->subject('Commande Memento')
+            ->html('Test HTML');
+        $mailer->send($email);
+
+        //EmailCommande
+        $email = (new Email())
+            ->from('Commande@memento.fr')
+            ->to('CommandeDuJour@memento.fr')
+            ->priority(Email::PRIORITY_HIGH)
+            ->subject('Commande Memento')
+            ->html('Test HTML');
+        $mailer->send($email);
+
+        return $this->render('reservation/reservationPaiementMidi.html.twig', [
+            'user' => $this->getUser(),
+            'panier' => $panierService->getTotal(),
+        ]);
+    }
+
 
     #[Route('/soir', name: 'soir')]
     public function soir(): Response

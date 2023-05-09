@@ -8,7 +8,7 @@
 
     <hr>
 
-    <div class="col" style="flex-direction: column" >
+    <div class="col" style="flex-direction: column">
         <div>
             <table class="table">
                 <thead>
@@ -93,7 +93,6 @@
 
                 </tbody>
             </table>
-
             <table class="table">
                 <thead>
                 <tr>
@@ -172,32 +171,31 @@
                 </tbody>
             </table>
         </div>
+
         <div>
             <div>
-
-                <h1>Panier</h1>
-
                 <table class="table">
+                    <h1>Panier</h1>
                     <thead>
                     <tr>
                         <th>Plats</th>
                         <th>Quantité</th>
                     </tr>
                     </thead>
-                        {% set total = null %}
-                        {% for item in panier %}
-                            {% set total = total + (item.plat.prix * item.quantite) %}
-                            <tbody>
-                            <tr>
-                                <td class="col-md-3">
-                                    <span>{{ item.plat.titre }}</span>
-                                </td>
-                                <td class="col-md-1">
-                                    <span>{{ item.quantite }}</span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        {% endfor %}
+                    {% set total = null %}
+                    {% for item in panier %}
+                        {% set total = total + (item.plat.prix * item.quantite) %}
+                        <tbody>
+                        <tr>
+                            <td class="col-md-3">
+                                <span>{{ item.plat.titre }}</span>
+                            </td>
+                            <td class="col-md-1">
+                                <span>{{ item.quantite }}</span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
                 </table>
             </div>
 
@@ -207,12 +205,13 @@
                         {{ total/100 | number_format() }} €
                         <span class="p-1"><a href="{{ path('reservation_removeAll') }}"><i
                                         class="fa-sharp fa-solid fa-trash-can"
-                                        style="color:darkred"></i></a></span></h2></div>
+                                        style="color:darkred"></i></a></span>
+                    </h2>
+                </div>
 
                 <div class="row">
                     <div class="liens">
                         <h2><a href="{{ path('reservation_validationMidi') }}" class="btn btn-primary">Valider</a></h2>
-                        <h2><a href="{{ path('reservation_home') }}" class="btn btn-primary">Retour</a></h2>
                     </div>
                 </div>
             </div>

@@ -237,9 +237,9 @@ footer {
 }
 
 .logo-link {
-    text-align: center;
+    /*text-align: center;*/
     padding-top: 5rem;
-    max-width: 60%
+    max-width: 40%
 }
 
 #sticky {
@@ -249,6 +249,9 @@ footer {
 }
 .col {
     column-count: 2;
+}
+.noclick {
+    pointer-events: none
 }
 
 @media screen and (max-width: 480px) {
@@ -261,13 +264,12 @@ footer {
     }
 
     .logoMemento {
-        width: 300%;
         padding-top: 1rem;
         margin-left: 3rem;
     }
 
     .logo-link {
-        width: 30%;
+        width: 50%;
     }
 
     .col {
