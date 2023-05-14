@@ -29,7 +29,7 @@
 
         <hr>
 
-        <h2>La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
+        <h2>Au paiement du panier, La commande sera disponible dans {{ tempsTotal+2 }} minutes</h2>
 
         <div>Une fois le paiement validé, un mail de confirmation ainsi que le numéro de réservation vous sera envoyé a
             l'adresse suivante : {{ user.email }}</div>
@@ -49,5 +49,6 @@
             </div>
         </div>
     </div>
-
+{#    {{ dump(panier) }}#}
+{#    {{ dump(user) }}#}
 {% endblock %}
